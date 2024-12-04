@@ -7,7 +7,7 @@ spring:
   jpa:
     show-sql: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/TeamUp
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://backend:5400/zoo
+    username: zoo
+    password: zoo
     driver-class-name: org.postgresql.Driver

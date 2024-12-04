@@ -17,7 +17,7 @@ services:
   zoo-api:
     build:
       dockerfile: ./Dockerfile
-      context: zoo-api
+      context: ./
     restart: always
     image: zoo
     container_name: zoo
