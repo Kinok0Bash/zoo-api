@@ -1,0 +1,13 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: zoo-api
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/TeamUp
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver

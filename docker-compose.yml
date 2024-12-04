@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:16.3
+    container_name: postgres-zoo
+    restart: always
+    environment:
+      POSTGRES_DB: "zoo"
+      POSTGRES_USER: "zoo"
+      POSTGRES_PASSWORD: "zoo"
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+      - "5400:5432"
+
+  zoo-api:
+    build:
+      dockerfile: ./Dockerfile
+      context: zoo-api
+    restart: always
+    image: zoo
+    container_name: zoo
+    networks:
+      - backend
+    ports:
+      - "8100:8100"
+
+
+
+networks:
+  backend:
