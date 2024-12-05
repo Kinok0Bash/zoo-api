@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM gradle:8.11.1-jdk-alpine AS builder
+FROM gradle:8.11.1-jdk21 AS builder
 WORKDIR /app
 COPY . /app
 RUN gradle clean build -x test

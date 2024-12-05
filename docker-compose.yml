@@ -1,7 +1,8 @@
 services:
-  postgres:
+  zoo-postgres:
     image: postgres:16.3
-    container_name: postgres-zoo
+    container_name: zoo-postgres
+    hostname: db
     restart: always
     environment:
       POSTGRES_DB: "zoo"
@@ -10,7 +11,7 @@ services:
     volumes:
       - /var/lib/postgresql/data:/var/lib/postgresql/data
     networks:
-      - backend
+       - zoo-backend
     ports:
       - "5400:5432"
 
@@ -22,11 +23,11 @@ services:
     image: zoo
     container_name: zoo
     networks:
-      - backend
+      - zoo-backend
+    depends_on:
+      - zoo-postgres
     ports:
-      - "8100:8100"
-
-
+      - "8800:8080"
 
 networks:
-  backend:
+  zoo-backend:

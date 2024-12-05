@@ -1,5 +1,5 @@
 server:
-  port: 8100
+  port: 8080
 
 spring:
   application:
@@ -7,7 +7,7 @@ spring:
   jpa:
     show-sql: true
   datasource:
-    url: jdbc:postgresql://backend:5400/zoo
+    url: jdbc:postgresql://db:5432/zoo
     username: zoo
     password: zoo
     driver-class-name: org.postgresql.Driver
