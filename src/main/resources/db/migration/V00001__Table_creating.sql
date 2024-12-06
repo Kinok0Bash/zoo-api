@@ -5,13 +5,6 @@ CREATE TABLE Enclosures (
     description TEXT
 );
 
-CREATE TABLE AnimalDiets (
-    diet_id SERIAL PRIMARY KEY,
-    animal_id INT,
-    diet_type TEXT,
-    FOREIGN KEY (animal_id) REFERENCES Animals(animal_id)
-);
-
 CREATE TABLE Animals (
     animal_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -30,6 +23,13 @@ CREATE TABLE Staff (
     position VARCHAR(100),
     assigned_enclosure_id INT,
     FOREIGN KEY (assigned_enclosure_id) REFERENCES Enclosures(enclosure_id)
+);
+
+CREATE TABLE AnimalDiets (
+    diet_id SERIAL PRIMARY KEY,
+    animal_id INT,
+    diet_type TEXT,
+    FOREIGN KEY (animal_id) REFERENCES Animals(animal_id)
 );
 
 CREATE TABLE Visitors (
