@@ -1,4 +1,4 @@
-package com.donstu.zooapi
+package com.uwu.zooapi
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

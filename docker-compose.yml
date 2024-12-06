@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: "zoo"
       POSTGRES_PASSWORD: "zoo"
     volumes:
-      - /var/lib/postgresql/data:/var/lib/postgresql/data
+      - /var/lib/postgresql/zoo:/var/lib/postgresql/data
     networks:
        - zoo-backend
     ports:
