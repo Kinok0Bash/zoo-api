@@ -58,3 +58,9 @@ CREATE TABLE Tickets (
     purchase_date DATE NOT NULL,
     FOREIGN KEY (visitor_id) REFERENCES Visitors(visitor_id)
 );
+
+CREATE TABLE Users (
+    user_id SERIAL PRIMARY KEY,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);
