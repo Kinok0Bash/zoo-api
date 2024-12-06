@@ -13,18 +13,18 @@ data class MedicalCheckupEntity(
 
     @ManyToOne
     @JoinColumn(name = "animal_id")
-    val animal: AnimalEntity?,
+    val animal: AnimalEntity = AnimalEntity(),
 
     @ManyToOne
     @JoinColumn(name = "staff_id")
-    val staff: StaffEntity?,
+    val staff: StaffEntity = StaffEntity(),
 
     @Column(name = "checkup_date", nullable = false)
-    val checkupDate: LocalDate,
+    val checkupDate: LocalDate = LocalDate.now(),
 
     @Column(name = "diagnosis")
-    val diagnosis: String?,
+    val diagnosis: String = "",
 
     @Column(name = "treatment")
-    val treatment: String?
+    val treatment: String = ""
 )

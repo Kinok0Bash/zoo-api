@@ -12,11 +12,11 @@ data class EnclosureEntity (
     val id: Int = 0,
 
     @Column(name = "size", nullable = false)
-    val size: BigDecimal,
+    val size: BigDecimal = BigDecimal.valueOf(0),
 
     @Column(name = "temperature", nullable = false)
-    val temperature: BigDecimal,
+    val temperature: BigDecimal = BigDecimal.valueOf(0),
 
     @Column(name = "description")
-    val description: String?
+    val description: String = ""
 )

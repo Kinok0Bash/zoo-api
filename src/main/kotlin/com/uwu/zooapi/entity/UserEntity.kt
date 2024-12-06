@@ -11,8 +11,8 @@ data class UserEntity (
     val id: Int = 0,
 
     @Column(name = "username", nullable = false, unique = true)
-    val username: String,
+    val username: String = "",
 
     @Column(name = "password", nullable = false)
-    val password: String
+    val password: String = ""
 )

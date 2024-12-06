@@ -12,8 +12,8 @@ data class AnimalDietEntity (
 
     @ManyToOne
     @JoinColumn(name = "animal_id")
-    val animal: AnimalEntity?,
+    val animal: AnimalEntity = AnimalEntity(),
 
     @Column(name = "diet_type")
-    val dietType: String?
+    val dietType: String = ""
 )

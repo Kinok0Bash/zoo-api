@@ -12,21 +12,21 @@ data class AnimalEntity (
     val id: Int = 0,
 
     @Column(name = "name", nullable = false)
-    val name: String,
+    val name: String = "",
 
     @Column(name = "species", nullable = false)
-    val species: String,
+    val species: String = "",
 
     @Column(name = "date_of_birth")
-    val dateOfBirth: LocalDate?,
+    val dateOfBirth: LocalDate = LocalDate.now(),
 
     @Column(name = "arrival_date")
-    val arrivalDate: LocalDate?,
+    val arrivalDate: LocalDate = LocalDate.now(),
 
     @Column(name = "origin")
-    val origin: String?,
+    val origin: String = "",
 
     @ManyToOne
     @JoinColumn(name = "enclosure_id")
-    val enclosure: EnclosureEntity?
+    val enclosure: EnclosureEntity = EnclosureEntity()
 )

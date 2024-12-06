@@ -12,11 +12,11 @@ data class VisitorEntity (
     val id: Int = 0,
 
     @Column(name = "name", nullable = false)
-    val name: String,
+    val name: String = "",
 
     @Column(name = "visit_date", nullable = false)
-    val visitDate: LocalDate,
+    val visitDate: LocalDate = LocalDate.now(),
 
     @Column(name = "feedback")
-    val feedback: String?
+    val feedback: String = ""
 )

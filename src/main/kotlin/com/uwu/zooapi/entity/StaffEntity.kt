@@ -11,15 +11,15 @@ data class StaffEntity (
     val id: Int = 0,
 
     @Column(name = "first_name", nullable = false)
-    val firstName: String,
+    val firstName: String = "",
 
     @Column(name = "last_name", nullable = false)
-    val lastName: String,
+    val lastName: String = "",
 
     @Column(name = "position")
-    val position: String?,
+    val position: String = "",
 
     @ManyToOne
     @JoinColumn(name = "assigned_enclosure_id")
-    val assignedEnclosure: EnclosureEntity?
+    val assignedEnclosure: EnclosureEntity = EnclosureEntity()
 )

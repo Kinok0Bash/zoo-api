@@ -14,14 +14,14 @@ data class TicketEntity (
 
     @ManyToOne
     @JoinColumn(name = "visitor_id")
-    val visitor: VisitorEntity?,
+    val visitor: VisitorEntity = VisitorEntity(),
 
     @Column(name = "ticket_type", nullable = false)
-    val ticketType: String,
+    val ticketType: String = "",
 
     @Column(name = "price", nullable = false)
-    val price: BigDecimal,
+    val price: BigDecimal = BigDecimal.valueOf(0),
 
     @Column(name = "purchase_date", nullable = false)
-    val purchaseDate: LocalDate
+    val purchaseDate: LocalDate = LocalDate.now()
 )
