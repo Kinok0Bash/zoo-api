@@ -1,6 +1,7 @@
 package com.uwu.zooapi.controller
 
 import com.uwu.zooapi.service.ReportService
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -18,6 +19,7 @@ class ReportController(private val reportService: ReportService) {
     private val logger = LoggerFactory.getLogger(ReportController::class.java)
 
     @GetMapping("/animals")
+    @Operation(summary = "Выкачка отчета обо всех животных")
     fun getAnimalReport(): ResponseEntity<ByteArray> {
         val txt = reportService.generateAnimalReport()
         val headers = HttpHeaders()
@@ -28,6 +30,7 @@ class ReportController(private val reportService: ReportService) {
     }
 
     @GetMapping("/medical")
+    @Operation(summary = "Выкачка отчета о здоровье животных за определенный год и месяц")
     fun getMedicalReport(
         @RequestParam("month") month: Int,
         @RequestParam("year") year: Int
@@ -41,6 +44,7 @@ class ReportController(private val reportService: ReportService) {
     }
 
     @GetMapping("/tickets")
+    @Operation(summary = "Выкачка отчета о продаже билетов за определенный год и месяц")
     fun getTicketSalesReport(
         @RequestParam("month") month: Int,
         @RequestParam("year") year: Int
