@@ -48,6 +48,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
     implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
 
+    // PDF
+    implementation("com.itextpdf:itext7-core:7.2.3")
+
     // JWT
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
