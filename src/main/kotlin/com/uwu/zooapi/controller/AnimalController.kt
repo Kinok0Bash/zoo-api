@@ -1,5 +1,6 @@
 package com.uwu.zooapi.controller
 
+import com.uwu.zooapi.dto.Animal
 import com.uwu.zooapi.entity.AnimalEntity
 import com.uwu.zooapi.entity.EnclosureEntity
 import com.uwu.zooapi.service.AnimalService
@@ -43,7 +44,7 @@ class AnimalController(
 
     @PutMapping
     @Operation(summary = "Обновление информации о животном")
-    fun updateAnimalInfo(@RequestBody animal: AnimalEntity): ResponseEntity<Map<String, String>> {
+    fun updateAnimalInfo(@RequestBody animal: Animal): ResponseEntity<Map<String, String>> {
         logger.info("Запрос на обновление информации о животном с id ${animal.id}")
         animalService.updateAnimalInfo(animal)
         return ResponseEntity.ok(mapOf("message" to "Успешно!"))

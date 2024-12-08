@@ -1,8 +1,11 @@
 package com.uwu.zooapi.service
 
+import com.uwu.zooapi.dto.Animal
 import com.uwu.zooapi.entity.AnimalEntity
+import com.uwu.zooapi.entity.EnclosureEntity
 import com.uwu.zooapi.repository.AnimalRepository
 import com.uwu.zooapi.repository.EnclosureRepository
+import com.uwu.zooapi.util.convertToAnimalEntity
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,18 +21,19 @@ class AnimalService(
 
     fun getAllEnclosures() = enclosureRepository.findAll()
 
-    fun getFullAnimalsInfoByEnclosure(id: Int): List<AnimalEntity> {
+    fun getFullAnimalsInfoByEnclosure(id: Int): List<AnimalEntity> = animalRepository.findAllByEnclosure(checkEnclosure(id))
+
+    fun updateAnimalInfo(request: Animal): AnimalEntity = animalRepository.save(request.convertToAnimalEntity(checkEnclosure(request.id)))
+
+    @Transactional
+    fun deleteAnimalById(id: Int) = animalRepository.deleteById(id)
+
+    private fun checkEnclosure(id: Int): EnclosureEntity {
         val enclosure = enclosureRepository.findById(id)
         if (!enclosure.isPresent) {
             logger.warn("Данного вольера не существует")
             throw Exception("Данного вольера не существует")
-        }
-        return animalRepository.findAllByEnclosure(enclosure.get())
+        } else return enclosure.get()
     }
-
-    fun updateAnimalInfo(animal: AnimalEntity) = animalRepository.save(animal)
-
-    @Transactional
-    fun deleteAnimalById(id: Int) = animalRepository.deleteById(id)
 
 }
