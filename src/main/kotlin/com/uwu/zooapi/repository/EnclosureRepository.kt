@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface EnclosureRepository: CrudRepository<EnclosureEntity, Int>
+interface EnclosureRepository: CrudRepository<EnclosureEntity, Int> {
+    override fun findAll(): List<EnclosureEntity>
+}

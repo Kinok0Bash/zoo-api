@@ -17,15 +17,16 @@ class ReportService(
                 "Название загона                         | Имя животного    | Вид                 | Дата рождения | Дата прибытия\n" +
                 "-------------------------------------------------------------------------------------------------------------------\n"
 
-        val body = data.forEach { element ->
-            String.format(
+        var body = ""
+        data.forEach { element ->
+            body += String.format(
                 "%-40s| %-17s| %-20s| %-14s| %-13s",
                 element.enclosure,
                 element.animalName,
                 element.animalSpecies,
                 element.dateOfBirth,
                 element.animalName
-            )
+            ) + "\n"
         }
 
         logger.info("Отчет сформирован успешно")
@@ -39,15 +40,16 @@ class ReportService(
                 "Имя животного    | Дата осмотра  | Диагноз                                 | Назначенное лечение           | ФИО сотрудника\n" +
                 "--------------------------------------------------------------------------------------------------------------------------------------\n"
 
-        val body = data.forEach { element ->
-            String.format(
+        var body = ""
+        data.forEach { element ->
+            body += String.format(
                 "%-17s| %-14s| %-40s| %-30s| %-20s",
                 element.animalName,
                 element.checkupDate,
                 element.diagnosis,
                 element.treatment,
                 element.staff
-            )
+            ) + "\n"
         }
 
         logger.info("Отчет сформирован успешно")
@@ -61,14 +63,15 @@ class ReportService(
                 "Имя посетителя                          | Тип билета  | Цена        | Дата покупки\n" +
                 "--------------------------------------------------------------------------------------\n"
 
-        val body = data.forEach { element ->
-            String.format(
+        var body = ""
+        data.forEach { element ->
+            body += String.format(
                 "%-40s| %-12s| %-12s| %-13s",
                 element.name,
                 element.ticketType,
                 element.price,
                 element.purchaseDate
-            )
+            ) + "\n"
         }
 
         logger.info("Отчет сформирован успешно")

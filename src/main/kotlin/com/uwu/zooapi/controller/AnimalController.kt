@@ -1,6 +1,7 @@
 package com.uwu.zooapi.controller
 
 import com.uwu.zooapi.entity.AnimalEntity
+import com.uwu.zooapi.entity.EnclosureEntity
 import com.uwu.zooapi.service.AnimalService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -24,6 +25,13 @@ class AnimalController(
     fun getFullAnimalsInfo(): ResponseEntity<List<AnimalEntity>> {
         logger.info("Запрос на получение всей информации обо всех животных")
         return ResponseEntity.ok(animalService.getFullAnimalsInfo())
+    }
+
+    @GetMapping("/enclosures")
+    @Operation(summary = "Получение списка вольеров")
+    fun getAllEnclosures(): ResponseEntity<List<EnclosureEntity>> {
+        logger.info("Запрос на получение всех вольеров")
+        return ResponseEntity.ok(animalService.getAllEnclosures())
     }
 
     @GetMapping("/{id}")

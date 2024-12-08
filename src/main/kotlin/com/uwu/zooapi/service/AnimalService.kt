@@ -16,6 +16,8 @@ class AnimalService(
 
     fun getFullAnimalsInfo() = animalRepository.findAll()
 
+    fun getAllEnclosures() = enclosureRepository.findAll()
+
     fun getFullAnimalsInfoByEnclosure(id: Int): List<AnimalEntity> {
         val enclosure = enclosureRepository.findById(id)
         if (!enclosure.isPresent) {

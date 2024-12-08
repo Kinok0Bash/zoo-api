@@ -54,11 +54,11 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
         data.forEach { element ->
             report.add(
                 AnimalReport(
-                    enclosure = element["Название загона"] as String,
-                    animalName = element["Имя животного"] as String,
-                    animalSpecies = element["Вид"] as String,
-                    dateOfBirth = element["Дата рождения"] as String,
-                    arrivalDate = element["Дата прибытия"] as String,
+                    enclosure = element["Название загона"].toString(),
+                    animalName = element["Имя животного"].toString(),
+                    animalSpecies = element["Вид"].toString(),
+                    dateOfBirth = element["Дата рождения"].toString(),
+                    arrivalDate = element["Дата прибытия"].toString(),
                 )
             )
         }
@@ -71,11 +71,11 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
         data.forEach { element ->
             report.add(
                 MedicalReport(
-                    animalName = element["Имя животного"] as String,
-                    checkupDate = element["Дата осмотра"] as String,
-                    diagnosis = element["Диагноз"] as String,
-                    treatment = element["Назначенное лечение"] as String,
-                    staff = element["ФИО сотрудника"] as String
+                    animalName = element["Имя животного"].toString(),
+                    checkupDate = element["Дата осмотра"].toString(),
+                    diagnosis = element["Диагноз"].toString(),
+                    treatment = element["Назначенное лечение"].toString(),
+                    staff = element["ФИО сотрудника"].toString()
                 )
             )
         }
@@ -92,15 +92,15 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
                 TicketType.FAMILY -> TicketType.FAMILY.value()
                 TicketType.ADULT -> TicketType.ADULT.value()
                 TicketType.CHILD -> TicketType.CHILD.value()
-                else -> element["Тип билета"] as String
+                else -> element["Тип билета"].toString()
             }
 
             report.add(
                 TicketSalesReport(
-                    name = element["Имя посетителя"] as String,
+                    name = element["Имя посетителя"].toString(),
                     ticketType = elementTicketType,
-                    price = element["Цена"] as String,
-                    purchaseDate = element["Дата покупки"] as String
+                    price = element["Цена"].toString(),
+                    purchaseDate = element["Дата покупки"].toString()
                 )
             )
         }
