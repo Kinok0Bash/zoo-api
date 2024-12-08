@@ -5,6 +5,7 @@ import com.uwu.zooapi.repository.AnimalRepository
 import com.uwu.zooapi.repository.EnclosureRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AnimalService(
@@ -26,6 +27,7 @@ class AnimalService(
 
     fun updateAnimalInfo(animal: AnimalEntity) = animalRepository.save(animal)
 
+    @Transactional
     fun deleteAnimalById(id: Int) = animalRepository.deleteById(id)
 
 }
