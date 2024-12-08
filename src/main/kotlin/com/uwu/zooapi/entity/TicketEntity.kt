@@ -1,5 +1,6 @@
 package com.uwu.zooapi.entity
 
+import com.uwu.zooapi.enum.TicketType
 import jakarta.persistence.*
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -17,7 +18,7 @@ data class TicketEntity (
     val visitor: VisitorEntity = VisitorEntity(),
 
     @Column(name = "ticket_type", nullable = false)
-    val ticketType: String = "",
+    val ticketType: TicketType = TicketType.ADULT,
 
     @Column(name = "price", nullable = false)
     val price: BigDecimal = BigDecimal.valueOf(0),

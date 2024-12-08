@@ -1,7 +1,7 @@
 package com.uwu.zooapi.controller
 
-import com.uwu.zooapi.dto.request.authentication.AuthenticationRequest
-import com.uwu.zooapi.dto.response.authentication.AuthenticationResponse
+import com.uwu.zooapi.dto.request.AuthenticationRequest
+import com.uwu.zooapi.dto.response.AuthenticationResponse
 import com.uwu.zooapi.service.AuthenticationService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag

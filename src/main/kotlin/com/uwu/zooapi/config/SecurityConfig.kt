@@ -26,7 +26,12 @@ class SecurityConfig(
             .authorizeHttpRequests { authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry
                     .requestMatchers(
-                        "/api/auth/who-am-i"
+                        "/api/auth/who-am-i",
+                        "/api/tickets/*",
+                        "/api/animals/*",
+                        "/api/reports/animals",
+                        "/api/reports/medical",
+                        "/api/reports/tickets",
                     )
                     .authenticated()
                     .anyRequest()

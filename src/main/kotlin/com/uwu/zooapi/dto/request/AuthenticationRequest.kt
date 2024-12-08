@@ -1,4 +1,4 @@
-package com.uwu.zooapi.dto.request.authentication
+package com.uwu.zooapi.dto.request
 
 data class AuthenticationRequest (
     var login: String,

@@ -49,4 +49,10 @@ class AnimalController(
         return ResponseEntity.ok(mapOf("message" to "Успешно!"))
     }
 
+    @ExceptionHandler
+    fun handleException(ex: Exception) : ResponseEntity<*> {
+        logger.error("Exception: $ex")
+        return ResponseEntity.badRequest().body(mapOf("error" to "${ex.message}"))
+    }
+
 }

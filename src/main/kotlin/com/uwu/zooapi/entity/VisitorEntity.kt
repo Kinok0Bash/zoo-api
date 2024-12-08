@@ -18,5 +18,5 @@ data class VisitorEntity (
     val visitDate: LocalDate = LocalDate.now(),
 
     @Column(name = "feedback")
-    val feedback: String = ""
+    val feedback: String? = ""
 )

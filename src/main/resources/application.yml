@@ -9,7 +9,7 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:postgresql://db:5432/zoo   # TODO: Перед деплойем поменять на вот это, а нижнее закоментить или убрать
+    url: jdbc:postgresql://db:5432/zoo
 #    url: jdbc:postgresql://localhost:5400/zoo
     username: zoo
     password: zoo

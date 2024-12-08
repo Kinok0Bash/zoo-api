@@ -3,6 +3,8 @@ package com.uwu.zooapi.dao
 import com.uwu.zooapi.dto.report.AnimalReport
 import com.uwu.zooapi.dto.report.MedicalReport
 import com.uwu.zooapi.dto.report.TicketSalesReport
+import com.uwu.zooapi.enum.TicketType
+import com.uwu.zooapi.enum.value
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 
@@ -84,10 +86,19 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
         val data = jdbcTemplate.queryForList(ticketSalesReportQuery, month, year)
         val report = mutableListOf<TicketSalesReport>()
         data.forEach { element ->
+            var elementTicketType = ""
+
+            elementTicketType = when(element["Тип билета"]) {
+                TicketType.FAMILY -> TicketType.FAMILY.value()
+                TicketType.ADULT -> TicketType.ADULT.value()
+                TicketType.CHILD -> TicketType.CHILD.value()
+                else -> element["Тип билета"] as String
+            }
+
             report.add(
                 TicketSalesReport(
                     name = element["Имя посетителя"] as String,
-                    ticketType = element["Тип билета"] as String,
+                    ticketType = elementTicketType,
                     price = element["Цена"] as String,
                     purchaseDate = element["Дата покупки"] as String
                 )

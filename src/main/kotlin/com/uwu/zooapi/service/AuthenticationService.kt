@@ -1,7 +1,7 @@
 package com.uwu.zooapi.service
 
-import com.uwu.zooapi.dto.request.authentication.AuthenticationRequest
-import com.uwu.zooapi.dto.response.authentication.AuthenticationResponse
+import com.uwu.zooapi.dto.request.AuthenticationRequest
+import com.uwu.zooapi.dto.response.AuthenticationResponse
 import com.uwu.zooapi.entity.UserEntity
 import com.uwu.zooapi.repository.UserRepository
 import com.uwu.zooapi.util.convertToUserDTO

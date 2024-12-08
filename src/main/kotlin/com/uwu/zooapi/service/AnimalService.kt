@@ -18,7 +18,7 @@ class AnimalService(
     fun getFullAnimalsInfoByEnclosure(id: Int): List<AnimalEntity> {
         val enclosure = enclosureRepository.findById(id)
         if (!enclosure.isPresent) {
-            logger.info("Данного вольера не существует")
+            logger.warn("Данного вольера не существует")
             throw Exception("Данного вольера не существует")
         }
         return animalRepository.findAllByEnclosure(enclosure.get())
