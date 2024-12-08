@@ -1,4 +1,4 @@
-package com.uwu.zooapi.dto.response
+package com.uwu.zooapi.dto.response.authentication
 
 data class AuthenticationResponse (
     var token: String,

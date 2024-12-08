@@ -1,12 +1,14 @@
 package com.uwu.zooapi.service
 
 import com.uwu.zooapi.dao.ReportDAO
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class ReportService(
     private val reportDAO: ReportDAO
 ) {
+    private val logger = LoggerFactory.getLogger(ReportService::class.java)
 
     fun generateAnimalTxtReport(): ByteArray {
         val data = reportDAO.getAnimalReport()
@@ -26,6 +28,7 @@ class ReportService(
             )
         }
 
+        logger.info("Отчет сформирован успешно")
         return (header + body).toByteArray(Charsets.UTF_8)
     }
 
@@ -47,6 +50,7 @@ class ReportService(
             )
         }
 
+        logger.info("Отчет сформирован успешно")
         return (header + body).toByteArray(Charsets.UTF_8)
     }
 
@@ -67,6 +71,7 @@ class ReportService(
             )
         }
 
+        logger.info("Отчет сформирован успешно")
         return (header + body).toByteArray(Charsets.UTF_8)
     }
 }

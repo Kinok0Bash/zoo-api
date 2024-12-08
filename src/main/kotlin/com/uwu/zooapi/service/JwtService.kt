@@ -30,12 +30,10 @@ class JwtService {
     fun getSingInKey(): Key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSigningKey))
 
     fun generateTokens(userDetails: User): ArrayList<String> {
-        logger.info("Beginning of generate token")
+        logger.info("Начата генерация токена")
         val header = HashMap<String, Any>()
         header["typ"] = "JWT"
         header["alg"] = "HS256"
-
-        logger.debug("Tokens for ${userDetails.login} has been generated")
 
         val tokens = ArrayList<String>()
 

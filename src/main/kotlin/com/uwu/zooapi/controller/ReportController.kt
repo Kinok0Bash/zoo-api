@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/report")
+@RequestMapping("/api/reports")
 @Tag(
     name = "Отчёты",
     description = "Контроллер для выкачки отчетов"
@@ -28,14 +28,14 @@ class ReportController(
     @GetMapping("/animals")
     @Operation(summary = "Получение отчета обо всех животных")
     fun getAnimalReport(): ResponseEntity<MutableList<AnimalReport>> {
-        logger.info("Request for get animal report")
+        logger.info("Запрос на получение отчета обо всех животных")
         return ResponseEntity.ok(reportDAO.getAnimalReport())
     }
 
     @GetMapping("/animals/download")
     @Operation(summary = "Выкачка отчета обо всех животных")
     fun getAnimalTxtReport(): ResponseEntity<ByteArray> {
-        logger.info("Request for download animal report")
+        logger.info("Запрос на скачивание отчета обо всех животных")
 
         val txt = reportService.generateAnimalTxtReport()
         val headers = HttpHeaders()
@@ -51,7 +51,7 @@ class ReportController(
         @RequestParam("month") month: Int,
         @RequestParam("year") year: Int
     ): ResponseEntity<MutableList<MedicalReport>> {
-        logger.info("Request for get medical report for $month of $year")
+        logger.info("Запрос на получение отчета о здоровье животных за $month месяц $year года")
         return ResponseEntity.ok(reportDAO.getMedicalReport(month, year))
     }
 
@@ -61,7 +61,7 @@ class ReportController(
         @RequestParam("month") month: Int,
         @RequestParam("year") year: Int
     ): ResponseEntity<ByteArray> {
-        logger.info("Request for download medical report for $month of $year")
+        logger.info("Запрос на скачивание отчета о здоровье животных за $month месяц $year года")
 
         val txt = reportService.generateMedicalTxtReport(month, year)
         val headers = HttpHeaders()
@@ -77,7 +77,7 @@ class ReportController(
         @RequestParam("month") month: Int,
         @RequestParam("year") year: Int
     ): ResponseEntity<MutableList<TicketSalesReport>> {
-        logger.info("Request for get tickets sales report for $month of $year")
+        logger.info("Запрос на получение отчета о продаже билетов за $month месяц $year года")
         return ResponseEntity.ok(reportDAO.getTicketSalesReport(month, year))
     }
 
@@ -87,7 +87,7 @@ class ReportController(
         @RequestParam("month") month: Int,
         @RequestParam("year") year: Int
     ): ResponseEntity<ByteArray> {
-        logger.info("Request for download tickets sales report for $month of $year")
+        logger.info("Запрос на скачивание отчета о продаже билетов за $month месяц $year года")
 
         val txt = reportService.generateTicketSalesTxtReport(month, year)
         val headers = HttpHeaders()
