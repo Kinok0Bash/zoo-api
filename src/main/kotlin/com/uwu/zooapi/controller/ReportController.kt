@@ -1,5 +1,9 @@
 package com.uwu.zooapi.controller
 
+import com.uwu.zooapi.dao.ReportDAO
+import com.uwu.zooapi.dto.report.AnimalReport
+import com.uwu.zooapi.dto.report.MedicalReport
+import com.uwu.zooapi.dto.report.TicketSalesReport
 import com.uwu.zooapi.service.ReportService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -15,13 +19,25 @@ import org.springframework.web.bind.annotation.*
     name = "Отчёты",
     description = "Контроллер для выкачки отчетов"
 )
-class ReportController(private val reportService: ReportService) {
+class ReportController(
+    private val reportService: ReportService,
+    private val reportDAO: ReportDAO
+) {
     private val logger = LoggerFactory.getLogger(ReportController::class.java)
 
     @GetMapping("/animals")
+    @Operation(summary = "Получение отчета обо всех животных")
+    fun getAnimalReport(): ResponseEntity<MutableList<AnimalReport>> {
+        logger.info("Request for get animal report")
+        return ResponseEntity.ok(reportDAO.getAnimalReport())
+    }
+
+    @GetMapping("/animals/download")
     @Operation(summary = "Выкачка отчета обо всех животных")
-    fun getAnimalReport(): ResponseEntity<ByteArray> {
-        val txt = reportService.generateAnimalReport()
+    fun getAnimalTxtReport(): ResponseEntity<ByteArray> {
+        logger.info("Request for download animal report")
+
+        val txt = reportService.generateAnimalTxtReport()
         val headers = HttpHeaders()
         headers.add("Content-Disposition", "attachment; filename=animal_report.txt")
         headers.add("Content-Type", "text/plain; charset=UTF-8")
@@ -30,12 +46,24 @@ class ReportController(private val reportService: ReportService) {
     }
 
     @GetMapping("/medical")
-    @Operation(summary = "Выкачка отчета о здоровье животных за определенный год и месяц")
+    @Operation(summary = "Получение отчета о здоровье животных за определенный год и месяц")
     fun getMedicalReport(
         @RequestParam("month") month: Int,
         @RequestParam("year") year: Int
+    ): ResponseEntity<MutableList<MedicalReport>> {
+        logger.info("Request for get medical report for $month of $year")
+        return ResponseEntity.ok(reportDAO.getMedicalReport(month, year))
+    }
+
+    @GetMapping("/medical/download")
+    @Operation(summary = "Выкачка отчета о здоровье животных за определенный год и месяц")
+    fun getMedicalTxtReport(
+        @RequestParam("month") month: Int,
+        @RequestParam("year") year: Int
     ): ResponseEntity<ByteArray> {
-        val txt = reportService.generateMedicalReport(month, year)
+        logger.info("Request for download medical report for $month of $year")
+
+        val txt = reportService.generateMedicalTxtReport(month, year)
         val headers = HttpHeaders()
         headers.add("Content-Disposition", "attachment; filename=medical_report_${year}_${month}.txt")
         headers.add("Content-Type", "text/plain; charset=UTF-8")
@@ -44,12 +72,24 @@ class ReportController(private val reportService: ReportService) {
     }
 
     @GetMapping("/tickets")
-    @Operation(summary = "Выкачка отчета о продаже билетов за определенный год и месяц")
+    @Operation(summary = "Получение отчета о продаже билетов за определенный год и месяц")
     fun getTicketSalesReport(
         @RequestParam("month") month: Int,
         @RequestParam("year") year: Int
+    ): ResponseEntity<MutableList<TicketSalesReport>> {
+        logger.info("Request for get tickets sales report for $month of $year")
+        return ResponseEntity.ok(reportDAO.getTicketSalesReport(month, year))
+    }
+
+    @GetMapping("/tickets/download")
+    @Operation(summary = "Выкачка отчета о продаже билетов за определенный год и месяц")
+    fun getTicketSalesTxtReport(
+        @RequestParam("month") month: Int,
+        @RequestParam("year") year: Int
     ): ResponseEntity<ByteArray> {
-        val txt = reportService.generateTicketSalesReport(month, year)
+        logger.info("Request for download tickets sales report for $month of $year")
+
+        val txt = reportService.generateTicketSalesTxtReport(month, year)
         val headers = HttpHeaders()
         headers.add("Content-Disposition", "attachment; filename=ticket_sales_report_${year}_${month}.txt")
         headers.add("Content-Type", "text/plain; charset=UTF-8")
