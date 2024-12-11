@@ -26,6 +26,6 @@ class CustomAuthenticationEntryPoint : AuthenticationEntryPoint {
             }
         """.trimMargin())
 
-        logger.warn("Запрос на ${request.requestURI} отклонен. Отсутствует токен авторизации")
+        logger.warn("Запрос на \"${request.requestURI}\" отклонен. Отсутствует токен авторизации")
     }
 }
