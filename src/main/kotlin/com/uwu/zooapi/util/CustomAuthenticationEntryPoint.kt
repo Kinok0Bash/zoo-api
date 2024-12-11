@@ -2,12 +2,15 @@ package com.uwu.zooapi.util
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
 
 @Component
 class CustomAuthenticationEntryPoint : AuthenticationEntryPoint {
+    val logger = LoggerFactory.getLogger(CustomAuthenticationEntryPoint::class.java)
+
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -22,5 +25,7 @@ class CustomAuthenticationEntryPoint : AuthenticationEntryPoint {
                 "path": "${request.requestURI}"
             }
         """.trimMargin())
+
+        logger.warn("Запрос на ${request.requestURI} отклонен. Отсутствует токен авторизации")
     }
 }

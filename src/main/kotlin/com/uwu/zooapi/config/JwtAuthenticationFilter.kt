@@ -28,7 +28,6 @@ class JwtAuthenticationFilter (
 
             if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith("Bearer ")) {
                 filterChain.doFilter(request, response)
-                logger.warn("Отсутствует токен авторизации")
                 return
             }
 
