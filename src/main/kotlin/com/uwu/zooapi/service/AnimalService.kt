@@ -23,7 +23,7 @@ class AnimalService(
 
     fun getFullAnimalsInfoByEnclosure(id: Int): List<AnimalEntity> = animalRepository.findAllByEnclosure(checkEnclosure(id))
 
-    fun updateAnimalInfo(request: Animal): AnimalEntity = animalRepository.save(request.convertToAnimalEntity(checkEnclosure(request.id)))
+    fun updateAnimalInfo(request: Animal): AnimalEntity = animalRepository.save(request.convertToAnimalEntity(checkEnclosure(request.enclosure)))
 
     @Transactional
     fun deleteAnimalById(id: Int) = animalRepository.deleteById(id)
