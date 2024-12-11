@@ -4,17 +4,10 @@ import com.uwu.zooapi.dto.request.BuyTicketRequest
 import com.uwu.zooapi.entity.TicketEntity
 import com.uwu.zooapi.service.TicketService
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.parameters.RequestBody
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -27,9 +20,9 @@ class TicketController(private val ticketService: TicketService) {
 
     @PostMapping("/buy")
     @Operation(summary = "Покупка билета")
-    fun buyTicket(@RequestBody request: BuyTicketRequest): ResponseEntity<Int> {
+    fun buyTicket(@RequestBody request: BuyTicketRequest): ResponseEntity<Map<String, Int>> {
         logger.info("Запрос на покупку билета")
-        return ResponseEntity.ok(ticketService.buyTicket(request))
+        return ResponseEntity.ok(mapOf("id" to ticketService.buyTicket(request)))
     }
 
     @GetMapping("/{id}")
@@ -39,9 +32,9 @@ class TicketController(private val ticketService: TicketService) {
         return ResponseEntity.ok(ticketService.getTicketById(id))
     }
 
-    @GetMapping("/visit")
+    @PutMapping("/visit")
     @Operation(summary = "Проставление посещения по билету")
-    fun visitTicket(@RequestParam id: Int): ResponseEntity<Int> {
+    fun visitTicket(@RequestParam id: Int): ResponseEntity<TicketEntity> {
         logger.info("Запрос на проставление посещения по билету")
         return ResponseEntity.ok(ticketService.visitTicket(id))
     }
