@@ -1,7 +1,6 @@
 package com.uwu.zooapi.config
 
 import com.uwu.zooapi.service.JwtService
-import com.uwu.zooapi.util.JwtException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -24,31 +23,37 @@ class JwtAuthenticationFilter (
         filterChain: FilterChain
     ) {
         try {
-            val authHeader = request.getHeader("Authorization")
-
-            if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith("Bearer ")) {
+            val token = request.getHeader("Authorization")
+            if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
                 filterChain.doFilter(request, response)
                 return
             }
 
-            val jwt = authHeader.substring(7)
-            val userEmail = jwtService.extractUsername(jwt)
+            val userEmail = jwtService.extractUsername(token)
 
             if (userEmail.isNotEmpty() && SecurityContextHolder.getContext().authentication == null) {
-                val userDetails = this.userDetailsService.loadUserByUsername(userEmail)
+                val userDetails = userDetailsService.loadUserByUsername(userEmail)
 
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+                if (jwtService.isTokenValid(token, userDetails)) {
                     val authToken = UsernamePasswordAuthenticationToken(userEmail, null, userDetails.authorities)
                     authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
                     SecurityContextHolder.getContext().authentication = authToken
-                } else throw JwtException()
+                } else return
             }
 
             filterChain.doFilter(request, response)
-        } catch (ex: JwtException) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Срок действия токена истек")
-            logger.warn("Срок действия токена истек")
-            return
+        } catch (ex: Exception) {
+            logger.error("Ошибка обработки токена", ex)
+            response.status = HttpServletResponse.SC_UNAUTHORIZED
+            response.contentType = "application/json"
+            response.writer.write("""
+            {
+                "status": 401,
+                "error": "Unauthorized",
+                "message": "Token is invalid",
+                "path": "${request.requestURI}"
+            }
+        """.trimIndent())
         }
     }
 

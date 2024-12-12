@@ -3,7 +3,7 @@ package com.uwu.zooapi.entity
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "AnimalDiets")
+@Table(name = "animaldiets")
 data class AnimalDietEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

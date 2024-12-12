@@ -1,5 +1,6 @@
 package com.uwu.zooapi.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -28,5 +29,13 @@ data class AnimalEntity (
 
     @ManyToOne
     @JoinColumn(name = "enclosure_id")
-    val enclosure: EnclosureEntity = EnclosureEntity()
+    val enclosure: EnclosureEntity = EnclosureEntity(),
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "animal", cascade = [CascadeType.REMOVE], orphanRemoval = true)
+    val animalDiets: List<AnimalDietEntity> = emptyList(),
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "animal", cascade = [CascadeType.REMOVE], orphanRemoval = true)
+    val medicalCheckups: List<MedicalCheckupEntity> = emptyList()
 )

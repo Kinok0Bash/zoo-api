@@ -86,12 +86,11 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
         val data = jdbcTemplate.queryForList(ticketSalesReportQuery, month, year)
         val report = mutableListOf<TicketSalesReport>()
         data.forEach { element ->
-            var elementTicketType = ""
 
-            elementTicketType = when(element["Тип билета"]) {
-                TicketType.FAMILY -> TicketType.FAMILY.value()
-                TicketType.ADULT -> TicketType.ADULT.value()
-                TicketType.CHILD -> TicketType.CHILD.value()
+            val elementTicketType: String = when(element["Тип билета"]) {
+                "0" -> TicketType.CHILD.value()
+                "1" -> TicketType.ADULT.value()
+                "2" -> TicketType.FAMILY.value()
                 else -> element["Тип билета"].toString()
             }
 
