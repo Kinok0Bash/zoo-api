@@ -4,5 +4,6 @@ data class TicketSalesReport(
     val name: String,
     val ticketType: String,
     val price: String,
-    val purchaseDate: String
+    val purchaseDate: String,
+    val avgPrice: String
 )

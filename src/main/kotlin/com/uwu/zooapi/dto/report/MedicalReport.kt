@@ -5,5 +5,6 @@ data class MedicalReport(
     val checkupDate: String,
     val diagnosis: String,
     val treatment: String,
-    val staff: String
+    val staff: String,
+    val checkupCount: String
 )

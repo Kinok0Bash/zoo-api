@@ -12,14 +12,16 @@ import org.springframework.stereotype.Service
 class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
 
     private val animalReportQuery = """
-        SELECT 
+            SELECT 
                 e.description AS "Название загона",
                 a.name AS "Имя животного",
                 a.species AS "Вид",
                 a.date_of_birth AS "Дата рождения",
-                a.arrival_date AS "Дата прибытия"
+                a.arrival_date AS "Дата прибытия",
+                MIN(a.date_of_birth) OVER (PARTITION BY e.enclosure_id) AS "Самое старое животное в загоне"
             FROM Animals a
             JOIN Enclosures e ON a.enclosure_id = e.enclosure_id
+            ORDER BY a.date_of_birth ASC;
         """.trimIndent()
 
     private val medicalReportQuery = """
@@ -28,12 +30,14 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
                 m.checkup_date AS "Дата осмотра",
                 m.diagnosis AS "Диагноз",
                 m.treatment AS "Назначенное лечение",
-                CONCAT(s.first_name, ' ', s.last_name) AS "ФИО сотрудника"
+                CONCAT(s.first_name, ' ', s.last_name) AS "ФИО сотрудника",
+                COUNT(m.checkup_id) OVER (PARTITION BY a.animal_id) AS "Количество осмотров для животного"
             FROM Medical_checkups m
             JOIN Animals a ON m.animal_id = a.animal_id
             JOIN Staff s ON m.staff_id = s.staff_id
             WHERE EXTRACT(MONTH FROM m.checkup_date) = ? 
               AND EXTRACT(YEAR FROM m.checkup_date) = ?
+            ORDER BY m.checkup_date ASC;
         """
 
     private val ticketSalesReportQuery = """
@@ -41,11 +45,13 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
                 v.name AS "Имя посетителя",
                 t.ticket_type AS "Тип билета",
                 t.price AS "Цена",
-                t.purchase_date AS "Дата покупки"
+                t.purchase_date AS "Дата покупки",
+                AVG(t.price) OVER (PARTITION BY t.ticket_type) AS "Средняя цена билета для типа"
             FROM Tickets t
             JOIN Visitors v ON t.visitor_id = v.visitor_id
             WHERE EXTRACT(MONTH FROM t.purchase_date) = ?
               AND EXTRACT(YEAR FROM t.purchase_date) = ?
+            ORDER BY t.price DESC;
         """
 
     fun getAnimalReport(): MutableList<AnimalReport> {
@@ -59,6 +65,7 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
                     animalSpecies = element["Вид"].toString(),
                     dateOfBirth = element["Дата рождения"].toString(),
                     arrivalDate = element["Дата прибытия"].toString(),
+                    oldestAnimal = element["Самое старое животное в загоне"].toString()
                 )
             )
         }
@@ -75,7 +82,8 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
                     checkupDate = element["Дата осмотра"].toString(),
                     diagnosis = element["Диагноз"].toString(),
                     treatment = element["Назначенное лечение"].toString(),
-                    staff = element["ФИО сотрудника"].toString()
+                    staff = element["ФИО сотрудника"].toString(),
+                    checkupCount = element["Количество осмотров для животного"].toString()
                 )
             )
         }
@@ -99,7 +107,8 @@ class ReportDAO(private val jdbcTemplate: JdbcTemplate) {
                     name = element["Имя посетителя"].toString(),
                     ticketType = elementTicketType,
                     price = element["Цена"].toString(),
-                    purchaseDate = element["Дата покупки"].toString()
+                    purchaseDate = element["Дата покупки"].toString(),
+                    avgPrice = element["Средняя цена билета для типа"].toString()
                 )
             )
         }

@@ -5,5 +5,6 @@ data class AnimalReport(
     val animalName: String,
     val animalSpecies: String,
     val dateOfBirth: String,
-    val arrivalDate: String
+    val arrivalDate: String,
+    val oldestAnimal: String
 )
