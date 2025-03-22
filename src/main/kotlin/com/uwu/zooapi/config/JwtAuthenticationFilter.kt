@@ -22,10 +22,19 @@ class JwtAuthenticationFilter (
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+        if (request.requestURI.startsWith("/api/auth") && request.requestURI != "/api/auth/who-am-i") {
+            filterChain.doFilter(request, response)
+            return
+        }
+
         try {
             val token = request.getHeader("Authorization")
-            if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
+            if (token == null || token.isEmpty()) {
                 filterChain.doFilter(request, response)
+                return
+            }
+
+            if (!token.startsWith("Bearer ")) {
                 return
             }
 
@@ -50,7 +59,7 @@ class JwtAuthenticationFilter (
             {
                 "status": 401,
                 "error": "Unauthorized",
-                "message": "Token is invalid",
+                "message": "Токен не валиден",
                 "path": "${request.requestURI}"
             }
         """.trimIndent())
