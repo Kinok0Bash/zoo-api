@@ -9,7 +9,15 @@ import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.CookieValue
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/auth")
@@ -36,7 +44,7 @@ class AuthenticationController(
         return ResponseEntity.ok(authenticationService.registration(request, response))
     }
 
-    @PostMapping("/logout")
+    @PutMapping("/logout")
     @Operation(summary = "Выход пользователя с сайта")
     fun logout(@CookieValue(value = "refreshToken") token: String,
                response: HttpServletResponse): ResponseEntity<Map<String, String>> {
@@ -61,7 +69,7 @@ class AuthenticationController(
     @ExceptionHandler
     fun handleException(ex: Exception) : ResponseEntity<*> {
         logger.error("Exception: $ex")
-        return ResponseEntity.badRequest().body(mapOf("error" to "${ex.message}"))
+        return ResponseEntity.badRequest().body(mapOf("message" to "${ex.message}"))
     }
 
 }
